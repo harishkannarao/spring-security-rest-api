@@ -31,22 +31,24 @@ dependencies {
 	testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
 	testFixturesImplementation("org.springframework.security:spring-security-test")
 	testFixturesImplementation("org.assertj:assertj-core")
-
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("org.assertj:assertj-core")
 }
 
 testing {
 	suites {
 		val test by getting(JvmTestSuite::class) {
-
+			dependencies {
+				implementation("org.springframework.boot:spring-boot-starter-test")
+				implementation("org.springframework.security:spring-security-test")
+				implementation("org.assertj:assertj-core")
+			}
 		}
 		val integrationTest by registering(JvmTestSuite::class) {
 			dependencies {
 				implementation(project())
 				implementation(testFixtures(project()))
 
+				implementation("org.springframework.boot:spring-boot-starter-test")
+				implementation("org.springframework.security:spring-security-test")
 				implementation("org.assertj:assertj-core")
 			}
 			targets {

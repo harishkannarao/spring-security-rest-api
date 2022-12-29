@@ -35,6 +35,27 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 }
 
+testing {
+	suites {
+		val test by getting(JvmTestSuite::class) {
+
+		}
+		val integrationTest by registering(JvmTestSuite::class) {
+			dependencies {
+				implementation(project())
+				implementation(testFixtures(project()))
+			}
+			targets {
+				all {
+					testTask.configure {
+						mustRunAfter(test)
+					}
+				}
+			}
+		}
+	}
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 
@@ -42,4 +63,8 @@ tasks.withType<Test> {
 
 	val properties = System.getProperties().entries.associate { it.key.toString() to it.value }
 	systemProperties(properties)
+}
+
+tasks.named("check") {
+	dependsOn(testing.suites.named("integrationTest"))
 }

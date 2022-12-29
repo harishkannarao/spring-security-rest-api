@@ -3,5 +3,5 @@ package com.harishkannarao.springsecurityrestapi;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public abstract class AbstractBaseIntegrationTest {
+abstract class AbstractBaseIntegrationTest {
 }

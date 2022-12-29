@@ -30,9 +30,11 @@ dependencies {
 
 	testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
 	testFixturesImplementation("org.springframework.security:spring-security-test")
+	testFixturesImplementation("org.assertj:assertj-core")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("org.assertj:assertj-core")
 }
 
 testing {
@@ -44,6 +46,8 @@ testing {
 			dependencies {
 				implementation(project())
 				implementation(testFixtures(project()))
+
+				implementation("org.assertj:assertj-core")
 			}
 			targets {
 				all {

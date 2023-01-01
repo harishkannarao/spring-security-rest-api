@@ -2,10 +2,12 @@ package com.harishkannarao.springsecurityrestapi.domain;
 
 import lombok.Builder;
 import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
 @Value
 @Builder(toBuilder = true)
+@Jacksonized
 public class SensitiveData {
-    private final String firstName;
-    private final String lastName;
+    String firstName;
+    String lastName;
 }

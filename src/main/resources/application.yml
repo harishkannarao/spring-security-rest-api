@@ -1,1 +1,2 @@
-
+cors:
+  allowedOrigins: "https://example.com,http://example.com,https://*.example.com,http://*.example.com"

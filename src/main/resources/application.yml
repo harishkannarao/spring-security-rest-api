@@ -1,2 +1,3 @@
 cors:
-  allowedOrigins: "https://example.com,http://example.com,https://*.example.com,http://*.example.com"
+  origin:
+    patterns: "https://example.com,http://example.com,https://*.example.com,http://*.example.com"

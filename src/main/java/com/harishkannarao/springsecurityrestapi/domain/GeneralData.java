@@ -10,7 +10,6 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true)
 @Jacksonized
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class SensitiveData {
-    String firstName;
-    String lastName;
+public class GeneralData {
+    String message;
 }

@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((auth) ->
                         auth
-                                .requestMatchers("/sensitive-data").permitAll()
-//                                .requestMatchers("/sensitive-data").hasAuthority("ROLE_USER")
+                                .requestMatchers("/general-data").permitAll()
+//                                .requestMatchers("/general-data").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling()

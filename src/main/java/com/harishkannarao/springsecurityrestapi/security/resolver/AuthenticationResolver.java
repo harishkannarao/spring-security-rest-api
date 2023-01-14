@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,15 +28,7 @@ public class AuthenticationResolver {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Optional<String> token = extractToken(authHeader);
         Optional<UserDetails> userDetails = token.flatMap(userDetailsResolver::resolve);
-        return userDetails.map(user -> {
-            List<GrantedAuthority> grantedAuthorities = authoritiesResolver.resolve(user);
-            UserDetails updatedUser = User.withUserDetails(user)
-                    .authorities(grantedAuthorities)
-                    .build();
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(updatedUser, null, grantedAuthorities);
-            return authentication;
-        });
+        return userDetails.map(user -> new UsernamePasswordAuthenticationToken(user, null, authoritiesResolver.resolve(user)));
     }
 
     private Optional<String> extractToken(String authHeader) {

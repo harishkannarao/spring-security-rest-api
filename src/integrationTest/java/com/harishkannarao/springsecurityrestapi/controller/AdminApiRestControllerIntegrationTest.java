@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AdminApiRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
 
     @Test
-    public void test_getUserData() {
+    public void test_getUserData_returns200_forAdminUser() {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setBearerAuth("admin-token");
         HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
@@ -27,6 +27,17 @@ public class AdminApiRestControllerIntegrationTest extends AbstractBaseDefaultPr
         assertThat(actualEntity).isNotNull();
         assertThat(actualEntity.getFirstName()).isEqualTo("userFirstName");
         assertThat(actualEntity.getLastName()).isEqualTo("userLastName");
+    }
+
+    @Test
+    public void test_getUserData_returns400_forNonExistentUsername_forAdminUser() {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setBearerAuth("admin-token");
+        HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
+        ResponseEntity<Void> result = testRestTemplate()
+                .exchange("/admin/get-user-data/{username}", HttpMethod.GET, requestEntity, Void.class, Map.of("username", "non-existent-user-name"));
+
+        assertThat(result.getStatusCode().value()).isEqualTo(400);
     }
 
     @Test

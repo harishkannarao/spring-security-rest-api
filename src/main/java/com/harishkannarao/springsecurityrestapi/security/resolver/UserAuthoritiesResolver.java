@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class AuthoritiesResolver {
+public class UserAuthoritiesResolver {
 
     public List<GrantedAuthority> resolve(UserDetails user) {
         if ("user-name-1".equals(user.getUsername())) {

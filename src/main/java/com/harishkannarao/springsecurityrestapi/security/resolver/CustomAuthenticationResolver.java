@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class AuthenticationResolver {
+public class CustomAuthenticationResolver {
 
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final UserDetailsResolver userDetailsResolver;
-    private final AuthoritiesResolver authoritiesResolver;
+    private final UserAuthoritiesResolver userAuthoritiesResolver;
 
     @Autowired
-    public AuthenticationResolver(UserDetailsResolver userDetailsResolver, AuthoritiesResolver authoritiesResolver) {
+    public CustomAuthenticationResolver(UserDetailsResolver userDetailsResolver, UserAuthoritiesResolver userAuthoritiesResolver) {
         this.userDetailsResolver = userDetailsResolver;
-        this.authoritiesResolver = authoritiesResolver;
+        this.userAuthoritiesResolver = userAuthoritiesResolver;
     }
 
     public Optional<Authentication> resolve(HttpServletRequest request) {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Optional<String> token = extractToken(authHeader);
         Optional<UserDetails> userDetails = token.flatMap(userDetailsResolver::resolve);
-        return userDetails.map(user -> new UsernamePasswordAuthenticationToken(user, null, authoritiesResolver.resolve(user)));
+        return userDetails.map(user -> new UsernamePasswordAuthenticationToken(user, null, userAuthoritiesResolver.resolve(user)));
     }
 
     private Optional<String> extractToken(String authHeader) {

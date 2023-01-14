@@ -1,6 +1,6 @@
 package com.harishkannarao.springsecurityrestapi.security.filter;
 
-import com.harishkannarao.springsecurityrestapi.security.resolver.AuthenticationResolver;
+import com.harishkannarao.springsecurityrestapi.security.resolver.CustomAuthenticationResolver;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,17 +19,17 @@ import java.util.Optional;
 @Slf4j
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
-    private final AuthenticationResolver authenticationResolver;
+    private final CustomAuthenticationResolver customAuthenticationResolver;
 
     @Autowired
-    public CustomAuthenticationFilter(AuthenticationResolver authenticationResolver) {
-        this.authenticationResolver = authenticationResolver;
+    public CustomAuthenticationFilter(CustomAuthenticationResolver customAuthenticationResolver) {
+        this.customAuthenticationResolver = customAuthenticationResolver;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            Optional<Authentication> resolvedAuthentication = authenticationResolver.resolve(request);
+            Optional<Authentication> resolvedAuthentication = customAuthenticationResolver.resolve(request);
             resolvedAuthentication.ifPresent(authentication -> {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 request.setAttribute("authentication", authentication);

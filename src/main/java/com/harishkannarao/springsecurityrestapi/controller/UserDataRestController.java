@@ -1,6 +1,8 @@
 package com.harishkannarao.springsecurityrestapi.controller;
 
 import com.harishkannarao.springsecurityrestapi.domain.UserData;
+import com.harishkannarao.springsecurityrestapi.security.resolver.UserDataResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,16 +17,17 @@ import java.util.Optional;
 @RequestMapping(path = {"/user-data"})
 public class UserDataRestController {
 
+    private final UserDataResolver userDataResolver;
+
+    @Autowired
+    public UserDataRestController(UserDataResolver userDataResolver) {
+        this.userDataResolver = userDataResolver;
+    }
+
     @GetMapping
     public ResponseEntity<UserData> getUserData(@RequestAttribute("authentication") Authentication authentication) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-        Optional<UserData> userData = Optional.empty();
-        if ("user-name-1".equals(principal.getUsername())) {
-            userData = Optional.of(UserData.builder()
-                    .firstName("userFirstName")
-                    .lastName("userLastName")
-                    .build());
-        }
+        Optional<UserData> userData = userDataResolver.resolve(principal.getUsername());
         return userData.map(value -> ResponseEntity.ok().body(value))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

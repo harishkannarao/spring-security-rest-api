@@ -16,19 +16,17 @@ public class CustomAuthenticationResolver {
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final UserDetailsResolver userDetailsResolver;
-    private final UserAuthoritiesResolver userAuthoritiesResolver;
 
     @Autowired
-    public CustomAuthenticationResolver(UserDetailsResolver userDetailsResolver, UserAuthoritiesResolver userAuthoritiesResolver) {
+    public CustomAuthenticationResolver(UserDetailsResolver userDetailsResolver) {
         this.userDetailsResolver = userDetailsResolver;
-        this.userAuthoritiesResolver = userAuthoritiesResolver;
     }
 
     public Optional<Authentication> resolve(HttpServletRequest request) {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Optional<String> token = extractToken(authHeader);
         Optional<UserDetails> userDetails = token.flatMap(userDetailsResolver::resolve);
-        return userDetails.map(user -> new UsernamePasswordAuthenticationToken(user, null, userAuthoritiesResolver.resolve(user)));
+        return userDetails.map(user -> new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
     }
 
     private Optional<String> extractToken(String authHeader) {

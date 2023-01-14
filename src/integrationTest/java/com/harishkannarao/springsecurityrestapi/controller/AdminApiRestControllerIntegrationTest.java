@@ -28,4 +28,15 @@ public class AdminApiRestControllerIntegrationTest extends AbstractBaseDefaultPr
         assertThat(actualEntity.getFirstName()).isEqualTo("userFirstName");
         assertThat(actualEntity.getLastName()).isEqualTo("userLastName");
     }
+
+    @Test
+    public void test_getUserData_returns403_forNonAdminUser() {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setBearerAuth("user-token");
+        HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
+        ResponseEntity<Void> result = testRestTemplate()
+                .exchange("/admin/get-user-data/{username}", HttpMethod.GET, requestEntity, Void.class, Map.of("username", "user-name-1"));
+
+        assertThat(result.getStatusCode().value()).isEqualTo(403);
+    }
 }

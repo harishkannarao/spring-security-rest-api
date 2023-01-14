@@ -4,16 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SensitiveDataTest {
+public class UserDataTest {
 
     @Test
     public void testEquals() {
-        SensitiveData sensitiveData1 = SensitiveDataFixtures.aSensitiveData().toBuilder()
+        UserData userData1 = SensitiveDataFixtures.aSensitiveData().toBuilder()
                 .lastName("something")
                 .build();
-        SensitiveData sensitiveData2 = SensitiveDataFixtures.aSensitiveData().toBuilder()
+        UserData userData2 = SensitiveDataFixtures.aSensitiveData().toBuilder()
                 .lastName("something")
                 .build();
-        assertThat(sensitiveData1).isEqualTo(sensitiveData2);
+        assertThat(userData1).isEqualTo(userData2);
     }
 }

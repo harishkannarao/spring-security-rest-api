@@ -1,6 +1,6 @@
 package com.harishkannarao.springsecurityrestapi.configuration;
 
-import com.harishkannarao.springsecurityrestapi.filter.CustomAuthenticationFilter;
+import com.harishkannarao.springsecurityrestapi.security.filter.CustomAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth
                                 .requestMatchers("/general-data").permitAll()
-//                                .requestMatchers("/general-data").hasAuthority("ROLE_USER")
+                                .requestMatchers("/user-data").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling()

@@ -21,7 +21,6 @@ public class UserDetailsResolver {
                             .credentialsExpired(false)
                             .accountLocked(false)
                             .authorities(Collections.emptyList())
-//                            .authorities(List.of(new SimpleGrantedAuthority("ROLE_USER")))
                             .build()
             );
         } else {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping(path = {"*"})
+@RequestMapping(path = {"/**"})
 @Slf4j
 public class FallBackRestController {
 

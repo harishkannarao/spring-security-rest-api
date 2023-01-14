@@ -14,6 +14,8 @@ public class UserAuthoritiesResolver {
     public List<GrantedAuthority> resolve(UserDetails user) {
         if ("user-name-1".equals(user.getUsername())) {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if ("admin-name-1".equals(user.getUsername())) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else {
             return Collections.emptyList();
         }

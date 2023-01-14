@@ -14,7 +14,7 @@ public class FallBackRestControllerIntegrationTest extends AbstractBaseDefaultPr
     @Test
     public void test_nonExistentEndpoint_return401_forUnAuthenticatedRequest() {
         ResponseEntity<Void> result = testRestTemplate()
-                .getForEntity("/non-existent-api", Void.class);
+                .getForEntity("/non-existent-api/some-path", Void.class);
         assertThat(result.getStatusCode().value()).isEqualTo(401);
     }
 
@@ -24,7 +24,7 @@ public class FallBackRestControllerIntegrationTest extends AbstractBaseDefaultPr
         requestHeaders.setBearerAuth("user-token");
         HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
         ResponseEntity<Void> result = testRestTemplate()
-                .exchange("/non-existent-api", HttpMethod.GET, requestEntity, Void.class);
+                .exchange("/non-existent-api/some-path", HttpMethod.GET, requestEntity, Void.class);
 
         assertThat(result.getStatusCode().value()).isEqualTo(404);
     }

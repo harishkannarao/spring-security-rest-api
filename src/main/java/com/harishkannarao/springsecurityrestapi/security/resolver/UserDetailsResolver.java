@@ -23,6 +23,18 @@ public class UserDetailsResolver {
                             .authorities(Collections.emptyList())
                             .build()
             );
+        } else if ("admin-token".equals(token)) {
+            return Optional.of(
+                    User.builder()
+                            .username("admin-name-1")
+                            .password("")
+                            .disabled(false)
+                            .accountExpired(false)
+                            .credentialsExpired(false)
+                            .accountLocked(false)
+                            .authorities(Collections.emptyList())
+                            .build()
+            );
         } else {
             return Optional.empty();
         }

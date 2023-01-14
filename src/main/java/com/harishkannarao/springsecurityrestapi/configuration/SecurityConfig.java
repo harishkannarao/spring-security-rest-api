@@ -36,6 +36,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/general-data").permitAll()
                                 .requestMatchers("/user-data").hasAuthority("ROLE_USER")
+                                .requestMatchers("/admin/get-user-data/*").hasAuthority("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling()

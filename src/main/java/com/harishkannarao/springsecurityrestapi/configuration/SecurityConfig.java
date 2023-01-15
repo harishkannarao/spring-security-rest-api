@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @Configuration
@@ -24,8 +26,14 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthenticationFilter customAuthenticationFilter;
 
+    @Autowired(required = false)
+    private List<Consumer<HttpSecurity>> httpSecurityCustomizers;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        Optional.ofNullable(httpSecurityCustomizers)
+                .ifPresent(value -> value.forEach(consumer -> consumer.accept(http)));
+
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

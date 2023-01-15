@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AdminApiRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
+public class AdminRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
 
     @Test
     public void test_getUserData_returns200_forAdminUser() {

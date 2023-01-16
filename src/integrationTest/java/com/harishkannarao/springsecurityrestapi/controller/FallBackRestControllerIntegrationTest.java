@@ -26,6 +26,6 @@ public class FallBackRestControllerIntegrationTest extends AbstractBaseDefaultPr
         ResponseEntity<Void> result = testRestTemplate()
                 .exchange("/non-existent-api/some-path", HttpMethod.GET, requestEntity, Void.class);
 
-        assertThat(result.getStatusCode().value()).isEqualTo(404);
+        assertThat(result.getStatusCode().value()).isEqualTo(403);
     }
 }

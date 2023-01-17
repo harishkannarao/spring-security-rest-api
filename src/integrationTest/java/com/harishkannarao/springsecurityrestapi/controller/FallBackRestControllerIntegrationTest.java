@@ -19,7 +19,7 @@ public class FallBackRestControllerIntegrationTest extends AbstractBaseDefaultPr
     }
 
     @Test
-    public void test_nonExistentEndpoint_return404_forAuthenticatedRequest() {
+    public void test_nonExistentEndpoint_return403_forAuthenticatedRequest() {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setBearerAuth("user-token");
         HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);

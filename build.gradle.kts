@@ -60,6 +60,24 @@ testing {
 				}
 			}
 		}
+		val ftIntegrationTest by registering(JvmTestSuite::class) {
+			dependencies {
+				implementation(project())
+				implementation(testFixtures(project()))
+				implementation("org.springframework.boot:spring-boot-starter-security")
+
+				implementation("org.springframework.boot:spring-boot-starter-test")
+				implementation("org.springframework.security:spring-security-test")
+				implementation("org.assertj:assertj-core")
+			}
+			targets {
+				all {
+					testTask.configure {
+						mustRunAfter(integrationTest)
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -73,5 +91,5 @@ tasks.withType<Test> {
 }
 
 tasks.named("check") {
-	dependsOn(testing.suites.named("integrationTest"))
+	dependsOn(testing.suites.named("integrationTest"), testing.suites.named("ftIntegrationTest"))
 }

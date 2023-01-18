@@ -31,6 +31,9 @@ public class SecurityConfig {
     @Autowired(required = false)
     private List<Consumer<HttpSecurity>> httpSecurityCustomizers;
 
+    @Value("${feature.beta.enabled}")
+    private boolean featureBetaEnabled;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         Optional.ofNullable(httpSecurityCustomizers)
@@ -57,8 +60,13 @@ public class SecurityConfig {
         auth
                 .requestMatchers("/general-data").permitAll()
                 .requestMatchers("/user-data").hasAuthority("ROLE_USER")
-                .requestMatchers("/admin/get-user-data/*").hasAuthority("ROLE_ADMIN")
-                .anyRequest().denyAll();
+                .requestMatchers("/admin/get-user-data/*").hasAuthority("ROLE_ADMIN");
+
+        if (featureBetaEnabled) {
+            auth.requestMatchers("/beta/user-data").hasAuthority("ROLE_USER");
+        }
+
+        auth.anyRequest().denyAll();
     }
 
     @Bean

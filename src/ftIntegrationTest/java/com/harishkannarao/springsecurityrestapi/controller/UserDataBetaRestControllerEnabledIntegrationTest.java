@@ -1,6 +1,6 @@
 package com.harishkannarao.springsecurityrestapi.controller;
 
-import com.harishkannarao.springsecurityrestapi.AbstractBaseIntegrationTestProfile;
+import com.harishkannarao.springsecurityrestapi.AbstractBaseFtIntegrationTestProfile;
 import com.harishkannarao.springsecurityrestapi.domain.UserData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserDataRestControllerIntegrationTest extends AbstractBaseIntegrationTestProfile {
+public class UserDataBetaRestControllerEnabledIntegrationTest extends AbstractBaseFtIntegrationTestProfile {
 
     @Test
     public void test_getUserData() {
@@ -18,7 +18,7 @@ public class UserDataRestControllerIntegrationTest extends AbstractBaseIntegrati
         requestHeaders.setBearerAuth("user-token");
         HttpEntity<Void> requestEntity = new HttpEntity<>(requestHeaders);
         ResponseEntity<UserData> result = testRestTemplate()
-                .exchange("/user-data", HttpMethod.GET, requestEntity, UserData.class);
+                .exchange("/beta/user-data", HttpMethod.GET, requestEntity, UserData.class);
 
         assertThat(result.getStatusCode().value()).isEqualTo(200);
         UserData actualEntity = result.getBody();

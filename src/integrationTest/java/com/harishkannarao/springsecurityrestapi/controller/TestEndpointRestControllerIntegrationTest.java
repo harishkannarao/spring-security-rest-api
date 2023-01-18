@@ -1,12 +1,12 @@
 package com.harishkannarao.springsecurityrestapi.controller;
 
-import com.harishkannarao.springsecurityrestapi.AbstractBaseDefaultProfileIntegrationTest;
+import com.harishkannarao.springsecurityrestapi.AbstractBaseIntegrationTestProfile;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestEndpointRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
+public class TestEndpointRestControllerIntegrationTest extends AbstractBaseIntegrationTestProfile {
 
     @Test
     public void testEndpoints_returns204() {

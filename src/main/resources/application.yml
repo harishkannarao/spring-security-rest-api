@@ -1,3 +1,7 @@
+feature:
+  beta:
+    enabled: false
+
 cors:
   origin:
     patterns: "https://example.com,http://example.com,https://*.example.com,http://*.example.com"

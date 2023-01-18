@@ -1,6 +1,6 @@
 package com.harishkannarao.springsecurityrestapi.controller;
 
-import com.harishkannarao.springsecurityrestapi.AbstractBaseDefaultProfileIntegrationTest;
+import com.harishkannarao.springsecurityrestapi.AbstractBaseIntegrationTestProfile;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FallBackRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
+public class FallBackRestControllerIntegrationTest extends AbstractBaseIntegrationTestProfile {
 
     @Test
     public void test_nonExistentEndpoint_return401_forUnAuthenticatedRequest() {

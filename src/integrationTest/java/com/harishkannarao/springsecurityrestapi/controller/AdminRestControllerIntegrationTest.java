@@ -1,6 +1,6 @@
 package com.harishkannarao.springsecurityrestapi.controller;
 
-import com.harishkannarao.springsecurityrestapi.AbstractBaseDefaultProfileIntegrationTest;
+import com.harishkannarao.springsecurityrestapi.AbstractBaseIntegrationTestProfile;
 import com.harishkannarao.springsecurityrestapi.domain.UserData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AdminRestControllerIntegrationTest extends AbstractBaseDefaultProfileIntegrationTest {
+public class AdminRestControllerIntegrationTest extends AbstractBaseIntegrationTestProfile {
 
     @Test
     public void test_getUserData_returns200_forAdminUser() {

@@ -3,7 +3,7 @@
 This repository is to showcase Authentication and Role Base Access Control (RBAC) for Spring Boot Rest API using Spring Security.
 
 ## Github Actions Build status
-[![Build Status](https://github.com/harishkannarao/spring-security-rest-api/workflows/CI-main/badge.svg)](https://github.com/harishkannarao/spring-security-rest-api/actions?query=workflow%3ACI-main)
+[![Build Status](https://github.com/harishkannarao/spring-security-rest-api/actions/workflows/CI-main.yml/badge.svg)](https://github.com/harishkannarao/spring-security-rest-api/actions/workflows/CI-main.yml)
 
 ## Required Softwares, Tools and Version
 * Java JDK Version: 17

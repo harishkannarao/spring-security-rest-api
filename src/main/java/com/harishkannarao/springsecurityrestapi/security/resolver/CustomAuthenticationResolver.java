@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -30,7 +31,7 @@ public class CustomAuthenticationResolver implements AuthenticationResolver {
     }
 
     private Optional<String> extractToken(String authHeader) {
-        if (authHeader.startsWith(BEARER_PREFIX)){
+        if (Objects.nonNull(authHeader) && authHeader.startsWith(BEARER_PREFIX)){
             return Optional.of(authHeader.substring(7));
         } else {
             return Optional.empty();

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CustomAuthenticationResolver {
+public class CustomAuthenticationResolver implements AuthenticationResolver {
 
     private static final String BEARER_PREFIX = "Bearer ";
 

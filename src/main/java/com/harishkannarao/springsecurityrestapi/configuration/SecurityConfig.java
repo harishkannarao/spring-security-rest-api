@@ -62,7 +62,7 @@ public class SecurityConfig {
         auth
                 .requestMatchers("/general-data").permitAll()
                 .requestMatchers("/user-data").hasAuthority("ROLE_USER")
-                .requestMatchers("/admin/get-user-data/*").authenticated()
+                .requestMatchers("/admin/**").authenticated()
         ;
 
         if (featureBetaEnabled) {

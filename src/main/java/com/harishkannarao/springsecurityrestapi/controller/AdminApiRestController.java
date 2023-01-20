@@ -4,6 +4,7 @@ import com.harishkannarao.springsecurityrestapi.domain.UserData;
 import com.harishkannarao.springsecurityrestapi.security.resolver.UserDataResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class AdminApiRestController {
     }
 
     @GetMapping(value = {"/get-user-data/{username}"})
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<UserData> getUserData(@PathVariable("username") String username) {
         Optional<UserData> userData = userDataResolver.resolve(username);
         return userData.map(value -> ResponseEntity.ok().body(value))

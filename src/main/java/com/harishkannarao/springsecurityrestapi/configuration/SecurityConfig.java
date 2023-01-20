@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -60,7 +62,8 @@ public class SecurityConfig {
         auth
                 .requestMatchers("/general-data").permitAll()
                 .requestMatchers("/user-data").hasAuthority("ROLE_USER")
-                .requestMatchers("/admin/get-user-data/*").hasAuthority("ROLE_ADMIN");
+                .requestMatchers("/admin/get-user-data/*").authenticated()
+        ;
 
         if (featureBetaEnabled) {
             auth.requestMatchers("/beta/user-data").hasAuthority("ROLE_USER");

@@ -30,10 +30,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             Optional<Authentication> resolvedAuthentication = customAuthenticationResolver.resolve(request);
-            resolvedAuthentication.ifPresent(authentication -> {
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                request.setAttribute("authentication", authentication);
-            });
+            resolvedAuthentication.ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
         } catch (Exception e) {
             log.error("Error resolving authentication: " + e.getMessage(), e);
         } finally {

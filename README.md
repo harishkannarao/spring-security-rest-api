@@ -18,7 +18,7 @@ This repository is to showcase Authentication and Role Base Access Control (RBAC
 
     ./gradlew bootRun
 
-    http://localhost:8080/general-data
+    http://localhost:8080/spring-security-rest-api/general-data
 
 ## Run the sample application using java
     
@@ -26,7 +26,7 @@ This repository is to showcase Authentication and Role Base Access Control (RBAC
 
     java -jar build/libs/spring-security-rest-api.jar
 
-    http://localhost:8080/general-data
+    http://localhost:8080/spring-security-rest-api/general-data
 
 ## Run unit tests
 

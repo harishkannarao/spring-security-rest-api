@@ -43,10 +43,9 @@ public class SecurityConfig {
                 .forEach(httpSecurityConsumer -> httpSecurityConsumer.accept(http));
 
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .cors()
-                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .headers().httpStrictTransportSecurity().and().and()
+                .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests(this::configureUrlAuthorization)
                 .exceptionHandling()

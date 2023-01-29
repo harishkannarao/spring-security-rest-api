@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: '/spring-security-rest-api'
+
 feature:
   beta:
     enabled: false

@@ -57,12 +57,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    private void configureUrlAuthorization(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
-        auth
-                .requestMatchers("/general-data").permitAll()
-                .requestMatchers("/user-data").hasAuthority("ROLE_USER")
-                .requestMatchers("/admin/**").authenticated()
-        ;
+    private void configureUrlAuthorization(
+            AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
+        auth.requestMatchers("/general-data").permitAll();
+        auth.requestMatchers("/user-data").hasAuthority("ROLE_USER");
+        auth.requestMatchers("/admin/**").authenticated();
 
         if (featureBetaEnabled) {
             auth.requestMatchers("/beta/user-data").hasAuthority("ROLE_USER");

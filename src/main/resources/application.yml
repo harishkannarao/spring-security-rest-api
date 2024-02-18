@@ -2,6 +2,11 @@ server:
   servlet:
     context-path: '/spring-security-rest-api'
 
+spring:
+  threads:
+    virtual:
+      enabled: true
+
 feature:
   beta:
     enabled: false

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,6 +37,9 @@ public class SecurityConfig {
     @Value("${feature.beta.enabled}")
     private boolean featureBetaEnabled;
 
+    @Value("${cors.origin.patterns}")
+    private String originPatterns;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         Optional.ofNullable(httpSecurityCustomizers)
@@ -43,15 +47,21 @@ public class SecurityConfig {
                 .forEach(httpSecurityConsumer -> httpSecurityConsumer.accept(http));
 
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .headers().httpStrictTransportSecurity().and().and()
-                .cors().and()
-                .csrf().disable()
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers ->
+                        headers.httpStrictTransportSecurity(hstsConfig -> hstsConfig.includeSubDomains(true)))
+                .cors(cors ->
+                        cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(this::configureUrlAuthorization)
-                .exceptionHandling()
-                .accessDeniedHandler((request, response, accessDeniedException) -> response.setStatus(HttpStatus.FORBIDDEN.value()))
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
+                    httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(
+                            (request, response, accessDeniedException) ->
+                                    response.setStatus(HttpStatus.FORBIDDEN.value()));
+                    httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(
+                            new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                })
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         ;
         return http.build();
@@ -70,8 +80,7 @@ public class SecurityConfig {
         auth.anyRequest().denyAll();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(@Value("${cors.origin.patterns}") String originPatterns) {
+    private CorsConfigurationSource corsConfigurationSource() {
         List<String> originPatternList = Stream.of(originPatterns.split(",")).toList();
         List<String> methods = List.of("GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH", "TRACE");
         String urlPattern = "/**";

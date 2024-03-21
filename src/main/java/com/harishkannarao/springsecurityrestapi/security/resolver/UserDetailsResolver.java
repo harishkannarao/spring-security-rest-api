@@ -33,7 +33,10 @@ public class UserDetailsResolver {
                             .accountExpired(false)
                             .credentialsExpired(false)
                             .accountLocked(false)
-                            .authorities(List.of(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                            .authorities(List.of(
+                                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                                    new SimpleGrantedAuthority("ROLE_ROOT_ADMIN")
+                            ))
                             .build()
             );
         } else {

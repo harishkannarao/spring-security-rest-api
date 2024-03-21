@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     @Autowired

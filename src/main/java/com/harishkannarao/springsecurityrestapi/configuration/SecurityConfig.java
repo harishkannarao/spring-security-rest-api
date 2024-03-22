@@ -71,7 +71,7 @@ public class SecurityConfig {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
         auth.requestMatchers("/general-data").permitAll();
         auth.requestMatchers("/user-data").hasAuthority("ROLE_USER");
-        auth.requestMatchers("/admin/**").authenticated();
+        auth.requestMatchers("/admin/**").permitAll();
 
         if (featureBetaEnabled) {
             auth.requestMatchers("/beta/user-data").hasAuthority("ROLE_USER");

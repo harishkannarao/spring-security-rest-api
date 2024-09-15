@@ -12,7 +12,7 @@ public class GeneralDataRestController {
 
     @GetMapping
     public ResponseEntity<GeneralData> getGeneralData() {
-        return ResponseEntity.ok().body(GeneralData.builder()
+        return ResponseEntity.accepted().body(GeneralData.builder()
                 .message("Welcome !!!")
                 .build());
     }

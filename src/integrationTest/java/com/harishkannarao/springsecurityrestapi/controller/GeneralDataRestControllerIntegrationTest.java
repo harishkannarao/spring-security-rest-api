@@ -22,7 +22,7 @@ public class GeneralDataRestControllerIntegrationTest extends AbstractBaseIntegr
     public void test_getGeneralData() {
         ResponseEntity<GeneralData> result = testRestTemplate
                 .getForEntity("/general-data", GeneralData.class);
-        assertThat(result.getStatusCode().value()).isEqualTo(200);
+        assertThat(result.getStatusCode().value()).isEqualTo(202);
         GeneralData actualEntity = result.getBody();
         assertThat(actualEntity).isNotNull();
         assertThat(actualEntity.getMessage()).isEqualTo("Welcome !!!");

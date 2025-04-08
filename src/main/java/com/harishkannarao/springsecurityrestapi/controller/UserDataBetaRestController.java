@@ -3,6 +3,7 @@ package com.harishkannarao.springsecurityrestapi.controller;
 import com.harishkannarao.springsecurityrestapi.domain.UserData;
 import com.harishkannarao.springsecurityrestapi.security.helper.AuthenticationHelper;
 import com.harishkannarao.springsecurityrestapi.security.resolver.UserDataResolver;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class UserDataBetaRestController {
     }
 
     @GetMapping
-    public ResponseEntity<UserData> getUserData() {
-        Optional<UserData> userData = userDataResolver.resolve(authenticationHelper.getCurrentUsername());
+    public ResponseEntity<UserData> getUserData(HttpServletRequest httpServletRequest) {
+        Optional<UserData> userData = userDataResolver.resolve(authenticationHelper.getCurrentUsername(httpServletRequest));
         return userData.map(value -> ResponseEntity.ok().body(value))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

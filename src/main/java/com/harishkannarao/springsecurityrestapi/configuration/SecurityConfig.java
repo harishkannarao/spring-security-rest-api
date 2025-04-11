@@ -69,6 +69,10 @@ public class SecurityConfig {
 
     private void configureUrlAuthorization(
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
+        // this /error mapping is required to return 400 or 500 or other statuses.
+        // otherwise 401 is returned for all errors
+        auth.requestMatchers("/error").permitAll();
+
         auth.requestMatchers("/general-data").permitAll();
         auth.requestMatchers("/user-data").hasAuthority("ROLE_USER");
         auth.requestMatchers("/admin/**").permitAll();
